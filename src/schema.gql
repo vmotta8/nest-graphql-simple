@@ -1,0 +1,30 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+}
+
+type Query {
+  findAll: [User!]!
+  findOneById(id: String!): User!
+}
+
+type Mutation {
+  update(data: IUpdateUserDTO!, id: String!): User!
+  create(data: ICreateUserDTO!): User!
+  delete(id: String!): Boolean!
+}
+
+input IUpdateUserDTO {
+  name: String
+  email: String
+}
+
+input ICreateUserDTO {
+  name: String!
+  email: String!
+}
