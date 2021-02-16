@@ -6,6 +6,7 @@ export default class TestUtil {
     user.name = 'Valid Name';
     user.email = 'validemail@email.com';
     user.id = '1';
+    user.password = '123456';
 
     return user;
   }

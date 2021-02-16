@@ -21,6 +21,12 @@ export class UserResolver {
     return user;
   }
 
+  @Query(() => User)
+  async findOneByEmail(@Args('email') email: string): Promise<User> {
+    const user = this.userService.findOneByEmail(email);
+    return user;
+  }
+
   @Mutation(() => User)
   async update(
     @Args('id') id: string,

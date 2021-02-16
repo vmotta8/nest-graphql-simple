@@ -8,23 +8,37 @@ type User {
   email: String!
 }
 
+type IAuthTypeDTO {
+  user: User!
+  token: String!
+}
+
 type Query {
   findAll: [User!]!
   findOneById(id: String!): User!
+  findOneByEmail(email: String!): User!
 }
 
 type Mutation {
   update(data: IUpdateUserDTO!, id: String!): User!
   create(data: ICreateUserDTO!): User!
   delete(id: String!): Boolean!
+  login(data: IAuthInputDTO!): IAuthTypeDTO!
 }
 
 input IUpdateUserDTO {
   name: String
   email: String
+  password: String
 }
 
 input ICreateUserDTO {
   name: String!
   email: String!
+  password: String!
+}
+
+input IAuthInputDTO {
+  email: String!
+  password: String!
 }
