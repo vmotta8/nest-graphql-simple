@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compareSync } from 'bcrypt';
 import { User } from 'src/user/user.entity';
@@ -15,6 +19,10 @@ export class AuthService {
 
   async validateUser(data: IAuthInputDTO): Promise<IAuthTypeDTO> {
     const user = await this.userService.findOneByEmail(data.email);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
 
     const validPassword = compareSync(data.password, user.password);
 

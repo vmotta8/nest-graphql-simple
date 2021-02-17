@@ -1,4 +1,6 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { GqlAuthGuard } from 'src/auth/auth.guard';
 import { ICreateUserDTO } from './dto/create-user.input';
 import { IUpdateUserDTO } from './dto/update-user.input';
 import { User } from './user.entity';
@@ -8,6 +10,7 @@ import { UserService } from './user.service';
 export class UserResolver {
   constructor(private userService: UserService) {}
 
+  @UseGuards(GqlAuthGuard)
   @Query(() => [User])
   async findAll(): Promise<User[]> {
     const users = this.userService.findAll();
