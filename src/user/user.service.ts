@@ -18,7 +18,7 @@ export class UserService {
   }
 
   async findOneById(id: string): Promise<User> {
-    const user = await this.userRepository.findOne(id);
+    const user = await this.userRepository.findOne({ where: { id } });
     return user;
   }
 
@@ -44,7 +44,7 @@ export class UserService {
 
   async delete(id: string): Promise<boolean> {
     const user = await this.findOneById(id);
-    const deleted = await this.userRepository.delete(user);
+    const deleted = await this.userRepository.remove(user);
     if (deleted) {
       return true;
     } else {

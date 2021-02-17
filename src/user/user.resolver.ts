@@ -5,12 +5,18 @@ import { ICreateUserDTO } from './dto/create-user.input';
 import { IUpdateUserDTO } from './dto/update-user.input';
 import { User } from './user.entity';
 import { UserService } from './user.service';
+import { CurrentUser } from 'src/auth/auth.current';
 
 @Resolver('User')
 export class UserResolver {
   constructor(private userService: UserService) {}
 
+  @Query(() => User)
   @UseGuards(GqlAuthGuard)
+  whoAmI(@CurrentUser() userId: string) {
+    return this.userService.findOneById(userId);
+  }
+
   @Query(() => [User])
   async findAll(): Promise<User[]> {
     const users = this.userService.findAll();
@@ -47,7 +53,7 @@ export class UserResolver {
 
   @Mutation(() => Boolean)
   async delete(@Args('id') id: string): Promise<boolean> {
-    const deleted = this.userService.delete(id);
+    const deleted = await this.userService.delete(id);
     return deleted;
   }
 }
